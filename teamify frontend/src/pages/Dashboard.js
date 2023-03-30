@@ -10,13 +10,15 @@ const Dashboard = () => {
         height: "100%",
       }}
     >
+      <BarChart />
+      <h1>helloo</h1>
       <Box
         sx={{
-          margin: "auto",
+          width: "10%",
+          height: "10%",
+          background: "red",
         }}
-      >
-        <BarChart />
-      </Box>
+      ></Box>
     </Box>
   );
 };
