@@ -11,13 +11,16 @@ const Routing = () => {
   return (
     <div className="content">
       <SideBar />
-      <TopBar />
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/teams" element={<Teams />} />
-        <Route path="/employees" element={<Employees />} />
-        <Route path="/projects" element={<Projects />} />
-      </Routes>
+
+      <div className="main">
+        <TopBar />
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/employees" element={<Employees />} />
+          <Route path="/projects" element={<Projects />} />
+        </Routes>
+      </div>
     </div>
   );
 };

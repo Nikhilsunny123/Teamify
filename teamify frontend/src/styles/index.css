@@ -22,17 +22,18 @@ body,
   background: #ffffff;
   color: black;
 }
-
 .app {
   display: flex;
   position: relative;
-
-  height: 100%;
-  width: 100%;
 }
 .content {
   display: flex;
   flex-direction: row;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -49,4 +50,7 @@ body,
 
 ::-webkit-scrollbar-track:hover {
   background: #555;
+}
+
+Link {
 }
