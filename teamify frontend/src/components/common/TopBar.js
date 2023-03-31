@@ -20,7 +20,9 @@ const TopBar = () => {
         }}
       >
         <Box>
-          <Typography variant="h5">Good Morning user</Typography>
+          <Typography style={{ fontSize: "26px", fontWeight: "700" }}>
+            Good Morning user
+          </Typography>
           <Typography variant="h6">Hope you have a good day </Typography>
         </Box>
         <Box sx={{ display: "flex", gap: "10%" }}>

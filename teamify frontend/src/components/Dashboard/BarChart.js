@@ -32,46 +32,59 @@ const BarChart = () => {
   return (
     <div
       style={{
-        width: "360px",
-        height: "344px",
-        padding: "5px",
+        width: "330px",
+        height: "330px",
+        paddingLeft: "10px",
+        margin: "5px",
+        border: "1px solid #E6E8EC",
+        borderRadius: "5%",
+
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
-        fontWeight: "800",
+        alignItems: "flex-start",
+        alignContent: "flex-start",
       }}
     >
       <Typography
         style={{
-          fontSize: "20px",
+          fontSize: "16px",
+          fontWeight: "700",
+          marginTop: "10px",
         }}
       >
         Teams Strength
       </Typography>
-      <ResponsiveBar
-        data={data}
-        keys={["value"]}
-        indexBy="name"
-        margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-        padding={0.3}
-        layout="vertical"
-        colors={(d) => d.data.color}
-        enableGridX={true}
-        enableGridY={true}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
+      <Box sx={{ width: "100%", height: "200px" }}>
+        <ResponsiveBar
+          data={data}
+          keys={["value"]}
+          indexBy="label"
+          margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+          padding={0.3}
+          layout="vertical"
+          colors={(d) => d.data.color}
+          axisLeft={null}
+          enableGridX={false}
+          enableGridY={false}
+          axisBottom={{
+            tickSize: 5,
+            tickPadding: 5,
+            tickRotation: 0,
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
         }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-        }}
-      />
-      {data.map((item) => (
-        <BarItem label={item.label} name={item.name} color={item.color} />
-      ))}
+      >
+        {data.map((item) => (
+          <BarItem label={item.label} name={item.name} color={item.color} />
+        ))}
+      </Box>
     </div>
   );
 };
@@ -80,16 +93,27 @@ export default BarChart;
 
 const BarItem = ({ label, name, color }) => {
   return (
-    <Box sx={{}}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: "15px",
+        flexBasis: "40%",
+        paddingLeft: "20px",
+      }}
+    >
       <Box
         sx={{
-          width: "5px",
-          height: "5px",
-          background: { color },
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "25px",
+          height: "25px",
+          backgroundColor: color,
+          mr: "5px",
         }}
       >
-        {" "}
-        <label>{label}</label>
+        <label style={{ fontSize: "12px", color: "#FFFFFF" }}>{label}</label>
       </Box>
 
       <p>{name}</p>
