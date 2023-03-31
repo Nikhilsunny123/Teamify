@@ -131,6 +131,7 @@ const Employees = () => {
             src={employeesImage}
             width="215px"
             height="215px"
+            alt="employeeimage"
           />
         </Box>
       </Box>

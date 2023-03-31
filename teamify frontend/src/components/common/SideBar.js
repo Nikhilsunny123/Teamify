@@ -94,7 +94,7 @@ const SideBar = () => {
           image={<SettingsOutlinedIcon />}
         />
       </Box>
-      <Box
+      {/* <Box
         sx={{
           margin: "auto",
 
@@ -128,7 +128,7 @@ const SideBar = () => {
             Share your Thoughts
           </Typography>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };
