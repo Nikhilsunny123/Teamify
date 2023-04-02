@@ -35,10 +35,16 @@ const employeeSlice = createSlice({
     },
     updateEmployee(state, action) {
       const { id, data } = action.payload;
-      const employee = state.employees.find((emp) => emp.id === id);
-      if (employee) {
-        Object.assign(employee, data);
+      const employeeIndex = state.employees.findIndex((emp) => emp.id === id);
+
+      if (employeeIndex !== -1) {
+        state.employees[employeeIndex] = {
+          ...state.employees[employeeIndex],
+          ...data,
+        };
       }
+
+      return state;
     },
   },
 });

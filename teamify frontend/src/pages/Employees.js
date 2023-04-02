@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import AddEmployee from "../components/Employees/AddEmployee";
+import { Link } from "react-router-dom";
 
 const Employees = () => {
   const selectAllempData = useSelector(selectEmpData);
@@ -23,11 +24,6 @@ const Employees = () => {
       id: "first_name",
       label: "First Name",
       minWidth: 100,
-      valueGetter: (params) => (
-        <a href={`https://example.com/users/${params.row.id}`}>
-          {params.row.first_name}
-        </a>
-      ),
     },
     { id: "last_name", label: "Last Name", minWidth: 100 },
     { id: "email", label: "Email", minWidth: 200 },
@@ -130,9 +126,18 @@ const Employees = () => {
                       const value = row[column.id];
                       return (
                         <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
+                          {column.id === "first_name" ? (
+                            <Link
+                              style={{ textDecoration: "none" }}
+                              to={`/employees/${row.id}`}
+                            >
+                              {value}
+                            </Link>
+                          ) : column.format && typeof value === "number" ? (
+                            column.format(value)
+                          ) : (
+                            value
+                          )}
                         </TableCell>
                       );
                     })}
