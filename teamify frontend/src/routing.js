@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Employees from "./pages/Employees";
 import Projects from "./pages/Projects";
 import Teams from "./pages/Teams";
+import EmployeeDetails from "./pages/EmployeeDetails";
 
 const Routing = () => {
   return (
@@ -18,6 +19,7 @@ const Routing = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/teams" element={<Teams />} />
           <Route path="/employees" element={<Employees />} />
+          <Route path="/employees/:id" component={<EmployeeDetails />} />
           <Route path="/projects" element={<Projects />} />
         </Routes>
       </div>

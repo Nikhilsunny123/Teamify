@@ -4,14 +4,9 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import ListItem from "@mui/material/ListItem";
-
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 import { FormHelperText, Typography } from "@mui/material";
 
 import TextField from "@mui/material/TextField";
@@ -21,11 +16,14 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
+import { addEmployee } from "../../store/teamifySlice/employeeSlice";
+import { useDispatch } from "react-redux";
+
 const addSchema = Yup.object().shape({
-  firstName: Yup.string()
+  first_name: Yup.string()
     .required("First name is required")
     .min(2, "First name must be at least 2 characters"),
-  lastName: Yup.string()
+  last_name: Yup.string()
     .required("Last name is required")
     .min(2, "Last name must be at least 2 characters"),
   email: Yup.string()
@@ -35,33 +33,36 @@ const addSchema = Yup.object().shape({
   job: Yup.string().required("Job is required"),
 });
 const initialValues = {
-  firstName: "",
-  lastName: "",
+  first_name: "",
+  last_name: "",
   email: "",
   gender: "",
   job: "",
 };
 
-// const useStyles = makeStyles({
-//   formControl: {
-//     marginTop: "1rem",
-//     marginBottom: "1rem",
-//   },
-//   error: {
-//     color: "red",
-//     marginTop: "0.5rem",
-//   },
-// });
-
 export default function AddEmployee() {
   const [state, setState] = React.useState(false);
+
+  const dispatch = useDispatch();
 
   const toggleDrawer = (open) => (event) => {
     setState(open);
   };
 
-  const handleSubmit = (data) => {
-    console.log(data);
+  const handleSubmit = (data, { setSubmitting }) => {
+    console.log({
+      ...data,
+    });
+
+    setSubmitting(true);
+    // perform your form submission logic here
+    dispatch(
+      addEmployee({
+        ...data,
+      })
+    );
+
+    setSubmitting(false);
   };
 
   const list = () => (
@@ -69,7 +70,7 @@ export default function AddEmployee() {
       sx={{
         width: 350,
         height: "100%",
-        backgroundColor: "#d0beed",
+        backgroundColor: "#dcf3f5",
         padding: "10px",
       }}
       role="presentation"
@@ -99,34 +100,37 @@ export default function AddEmployee() {
           validationSchema={addSchema}
           onSubmit={handleSubmit}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            isSubmitting,
-            onSubmit,
-          }) => (
+          {({ values, errors, touched, handleChange, isSubmitting }) => (
             <Form>
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Field
-                  name="firstName"
+                  name="first_name"
                   label="First Name"
                   variant="outlined"
                   margin="normal"
                   as={TextField}
-                  error={touched.firstName && errors.firstName}
-                  helperText={touched.firstName && errors.firstName}
+                  error={touched.first_name && errors.first_name}
+                  helperText={touched.first_name && errors.first_name}
+                  sx={{
+                    fontSize: "14px",
+                  }}
                 />
                 <Field
-                  name="lastName"
+                  name="last_name"
                   label="Last Name"
                   variant="outlined"
                   margin="normal"
                   as={TextField}
-                  error={touched.lastName && errors.lastName}
-                  helperText={touched.lastName && errors.lastName}
+                  error={touched.last_name && errors.last_name}
+                  helperText={touched.last_name && errors.last_name}
+                  sx={{
+                    fontSize: "14px",
+                  }}
                 />
                 <Field
                   name="email"
@@ -136,8 +140,11 @@ export default function AddEmployee() {
                   as={TextField}
                   error={touched.email && errors.email}
                   helperText={touched.email && errors.email}
+                  sx={{
+                    fontSize: "14px",
+                  }}
                 />
-                <Box sx={{ margin: "16px 0" }}>
+                <Box>
                   <FormControl
                     component="fieldset"
                     error={touched.gender && errors.gender}
@@ -164,7 +171,7 @@ export default function AddEmployee() {
                     </FormHelperText>
                   </FormControl>
                 </Box>
-                <Box sx={{ margin: "16px 0" }}>
+                <Box>
                   <span>Job</span>
                   <RadioGroup
                     name="job"
@@ -192,12 +199,13 @@ export default function AddEmployee() {
                       label="Design"
                     />
                   </RadioGroup>
+
                   {touched.job && errors.job && (
                     <FormHelperText error>{errors.job}</FormHelperText>
                   )}
                 </Box>
               </Box>
-              <Button variant="contained" onClick={onSubmit}>
+              <Button variant="contained" type="submit" disabled={isSubmitting}>
                 Add
               </Button>
             </Form>

@@ -2,6 +2,8 @@ import React from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import avatar from "../../assets/images/user1.jpg";
+
 import { Box, Typography } from "@mui/material";
 const TopBar = () => {
   return (
@@ -25,16 +27,24 @@ const TopBar = () => {
           </Typography>
           <Typography variant="h6">Hope you have a good day </Typography>
         </Box>
-        <Box sx={{ display: "flex", gap: "10%" }}>
+        <Box
+          sx={{
+            display: "flex",
+
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "5%",
+          }}
+        >
           <SearchOutlinedIcon />
           <NotificationsNoneOutlinedIcon />
 
           <img
-            src="your-image-url.jpg"
+            src={avatar}
             alt="Avatar"
             style={{
-              maxWidth: "100%",
-              maxHeight: "100%",
+              maxWidth: "40px",
+              maxHeight: "40px",
               borderRadius: "50%",
               objectFit: "cover",
             }}

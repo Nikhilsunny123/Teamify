@@ -12,7 +12,6 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import AddEmployee from "../components/Employees/AddEmployee";
-import TemporaryDrawer from "../components/Employees/AddEmployee";
 
 const Employees = () => {
   const selectAllempData = useSelector(selectEmpData);
@@ -24,7 +23,11 @@ const Employees = () => {
       id: "first_name",
       label: "First Name",
       minWidth: 100,
-      valueGetter: (params) => console.log(params),
+      valueGetter: (params) => (
+        <a href={`https://example.com/users/${params.row.id}`}>
+          {params.row.first_name}
+        </a>
+      ),
     },
     { id: "last_name", label: "Last Name", minWidth: 100 },
     { id: "email", label: "Email", minWidth: 200 },

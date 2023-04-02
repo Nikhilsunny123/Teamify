@@ -5,12 +5,12 @@ const Notifications = () => {
   const notificationData = [
     {
       main: "Ellie joined team developers",
-      sub: "04 April, 2021 | 04:00 PM",
+      sub: "04 April, 2022 | 04:00 PM",
       image: Avatar,
     },
     {
-      main: "Ellie joined team developers",
-      sub: "04 April, 2021 | 04:00 PM",
+      main: "Ann joined team HR",
+      sub: "04 march, 2022 | 09:00 PM",
       image: Avatar,
     },
     {
