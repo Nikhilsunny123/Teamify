@@ -28,23 +28,18 @@ const employeeSlice = createSlice({
     },
     deleteEmployee(state, action) {
       const id = action.payload;
-      state.employees = state.employees.filter((emp) => emp.id !== id);
+      console.log(id);
+      state.employeeData = state.employeeData.filter((emp) => emp.id !== id);
     },
     employeeDetails(state, action) {
       state.selectedEmployee = action.payload;
     },
     updateEmployee(state, action) {
-      const { id, data } = action.payload;
-      const employeeIndex = state.employees.findIndex((emp) => emp.id === id);
-
-      if (employeeIndex !== -1) {
-        state.employees[employeeIndex] = {
-          ...state.employees[employeeIndex],
-          ...data,
-        };
-      }
-
-      return state;
+      const { id, ...data } = action.payload;
+      console.log(data);
+      state.employeeData = state.employeeData.map((employee) =>
+        employee.id === id ? { ...employee, ...data } : employee
+      );
     },
   },
 });

@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-export default function DeleteModal({ onDelete }) {
+export default function DeleteModal({ onDelete, name }) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -36,10 +36,10 @@ export default function DeleteModal({ onDelete }) {
         Delete
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Delete Employee?</DialogTitle>
+        <DialogTitle>Delete {name}?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this employee?
+            Are you sure you want to delete this ?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -156,12 +156,12 @@ export default function AddEmployee() {
                       onChange={handleChange}
                     >
                       <FormControlLabel
-                        value="male"
+                        value="Male"
                         control={<Radio />}
                         label="Male"
                       />
                       <FormControlLabel
-                        value="female"
+                        value="Female"
                         control={<Radio />}
                         label="Female"
                       />

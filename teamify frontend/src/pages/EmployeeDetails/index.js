@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteEmployee,
   selectEmpData,
@@ -17,7 +17,8 @@ import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
 import Radio from "@mui/material/Radio";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import DeleteModal from "../../components/Employees/DeleteModal";
+import DeleteModal from "../../components/shared/DeleteModal";
+import Toastr from "../../components/shared/Toastr";
 
 const addSchema = Yup.object().shape({
   first_name: Yup.string()
@@ -35,29 +36,33 @@ const addSchema = Yup.object().shape({
 
 const EmployeeDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
   const dispatch = useDispatch();
   const empData = useSelector(selectEmpData);
   const employee = empData.find((e) => e.id === parseInt(id));
   console.log(employee);
 
-  const handleUpdate = (data, { setSubmitting }) => {
-    console.log({
-      ...data,
-    });
-
+  const handleUpdate = async (data, { setSubmitting }) => {
     setSubmitting(true);
 
-    dispatch(
+    await dispatch(
       updateEmployee({
         ...data,
       })
     );
-    setSubmitting(false);
+    await setSubmitting(false);
+    await setIsEdit(false);
   };
-  const handleDelete = (data, { setSubmitting }) => {
-    dispatch(deleteEmployee(data.id));
-    console.log(data.id);
+  const handleDelete = async () => {
+    console.log(employee.id);
+    try {
+      await dispatch(deleteEmployee(employee.id));
+      await (<Toastr />);
+      await navigate("/employees");
+    } catch (error) {
+      console.log("not dispatched");
+    }
   };
   return (
     <Box
@@ -83,7 +88,14 @@ const EmployeeDetails = () => {
         validationSchema={addSchema}
         onSubmit={isEdit ? handleUpdate : handleDelete}
       >
-        {({ values, errors, touched, handleChange, isSubmitting }) => (
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          isSubmitting,
+          submitForm,
+        }) => (
           <Form>
             <Box
               sx={{
@@ -159,12 +171,12 @@ const EmployeeDetails = () => {
                       }}
                     >
                       <FormControlLabel
-                        value="male"
+                        value="Male"
                         control={<Radio />}
                         label="Male"
                       />
                       <FormControlLabel
-                        value="female"
+                        value="Female"
                         control={<Radio />}
                         label="Female"
                       />
@@ -175,47 +187,50 @@ const EmployeeDetails = () => {
                   </FormHelperText>
                 </FormControl>
               </Box>
+
               <Box>
-                <span>Job</span>
-                <RadioGroup
-                  name="job"
-                  value={values.job}
-                  onChange={handleChange}
+                <FormControl
+                  component="fieldset"
+                  error={touched.job && errors.job}
                   disabled={!isEdit}
                 >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      gap: "10px",
-                    }}
+                  <FormLabel component="legend">Job</FormLabel>
+                  <RadioGroup
+                    name="job"
+                    value={values.job}
+                    onChange={handleChange}
                   >
-                    <FormControlLabel
-                      value="marketing"
-                      control={<Radio />}
-                      label="Marketing"
-                    />
-                    <FormControlLabel
-                      value="hr"
-                      control={<Radio />}
-                      label="HR"
-                    />
-                    <FormControlLabel
-                      value="developers"
-                      control={<Radio />}
-                      label="Developers"
-                    />
-                    <FormControlLabel
-                      value="design"
-                      control={<Radio />}
-                      label="Design"
-                    />
-                  </Box>
-                </RadioGroup>
-
-                {touched.job && errors.job && (
-                  <FormHelperText error>{errors.job}</FormHelperText>
-                )}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px",
+                      }}
+                    >
+                      <FormControlLabel
+                        value="Marketing"
+                        control={<Radio />}
+                        label="Marketing"
+                      />
+                      <FormControlLabel
+                        value="Hr"
+                        control={<Radio />}
+                        label="HR"
+                      />
+                      <FormControlLabel
+                        value="Developer"
+                        control={<Radio />}
+                        label="Developer"
+                      />
+                      <FormControlLabel
+                        value="Designer"
+                        control={<Radio />}
+                        label="Designer"
+                      />
+                    </Box>
+                  </RadioGroup>
+                  <FormHelperText>{touched.job && errors.job}</FormHelperText>
+                </FormControl>
               </Box>
             </Box>
             <Box
@@ -223,6 +238,7 @@ const EmployeeDetails = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 gap: "10px",
+                marginTop: "10px",
               }}
             >
               {!isEdit ? (
@@ -238,7 +254,7 @@ const EmployeeDetails = () => {
                     Edit
                   </Button>
 
-                  <DeleteModal onDelete={handleDelete} />
+                  <DeleteModal onDelete={handleDelete} name="Employee" />
                 </>
               ) : (
                 <Button
@@ -246,7 +262,7 @@ const EmployeeDetails = () => {
                   sx={{
                     backgroundColor: "#6956E5",
                   }}
-                  type="submit"
+                  onClick={() => submitForm()}
                 >
                   Confirm Changes
                 </Button>
