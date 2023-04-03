@@ -3,9 +3,36 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import avatar from "../../assets/images/user1.jpg";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Box, Button, Typography } from "@mui/material";
+import { useState } from "react";
+import BasicMenu from "./BasicMenu";
 
-import { Box, Typography } from "@mui/material";
 const TopBar = () => {
+  const AvatarDiv = () => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          cursor: "pointer",
+        }}
+      >
+        <img
+          src={avatar}
+          alt="Avatar"
+          style={{
+            maxWidth: "40px",
+            maxHeight: "40px",
+            borderRadius: "50%",
+            objectFit: "cover",
+          }}
+        />
+        <ArrowDropDownOutlinedIcon />
+      </div>
+    );
+  };
   return (
     <Box
       sx={{
@@ -39,18 +66,7 @@ const TopBar = () => {
           <SearchOutlinedIcon />
           <NotificationsNoneOutlinedIcon />
 
-          <img
-            src={avatar}
-            alt="Avatar"
-            style={{
-              maxWidth: "40px",
-              maxHeight: "40px",
-              borderRadius: "50%",
-              objectFit: "cover",
-            }}
-          />
-
-          <ArrowDropDownOutlinedIcon />
+          <BasicMenu component={<AvatarDiv />} />
         </Box>
       </Box>
     </Box>
