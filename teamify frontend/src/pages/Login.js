@@ -60,10 +60,12 @@ const LoginForm = () => {
         onSubmit={(values, { setSubmitting }) => {
           localStorage.setItem("name", values.email);
           localStorage.setItem("isLogin", true);
-          if (checkIfUserIsAuthenticated()) {
-            navigate("/");
-          }
-          setSubmitting(false);
+          setTimeout(() => {
+            if (checkIfUserIsAuthenticated()) {
+              navigate("/");
+            }
+            setSubmitting(false);
+          }, 3000);
         }}
       >
         {({
