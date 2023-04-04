@@ -9,7 +9,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 
-import { Box, Button, FormHelperText, Typography } from "@mui/material";
+import { Avatar, Box, Button, FormHelperText, Typography } from "@mui/material";
 
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
@@ -74,6 +74,9 @@ const EmployeeDetails = () => {
         alignItems: "center",
       }}
     >
+      <div>
+        <Avatar />
+      </div>
       <Typography
         style={{
           display: "flex",
